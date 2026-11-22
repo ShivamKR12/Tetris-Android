@@ -39,15 +39,16 @@ jobs:
       uses: actions/cache@v4
       with:
         path: |
-          .buildozer
           ~/.buildozer
           ~/.gradle
-        key: buildozer-v1-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
+        key: buildozer-v2-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
         restore-keys: |
+          buildozer-v2-${{ runner.os }}-
           buildozer-v1-${{ runner.os }}-
 
     - name: Build with Buildozer
       run: |
+        yes | buildozer appclean || true
         yes | buildozer -v android debug
 
     - name: Upload APK Artifact
